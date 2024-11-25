@@ -50,3 +50,49 @@ kind load docker-image example-app-1.0.0 --name demo
 ```bash
 kubectl create namespace apps
 ```
+
+6. Wait Flux to Reconciliate the deployments
+
+7. Check your deployments
+```bash
+kubectl get deployments -n apps
+```
+
+8. Port Forward the Application
+```bash
+kubectl port-forward service/example-app-1 5000:80 -n apps
+```
+
+9. Check the result
+```bash
+curl localhost:5000
+# {"message":"Welcome to the Flask app!" Version 1.0.0}
+```
+
+10. Update the [app file](./artifacts/python/example-app/src/app.py) increasing the version to 1.0.1
+```python
+@app.route('/')
+def home():
+    return jsonify({"message": "Welcome to the Flask app! Version 1.0.1"})
+```
+
+11. Rebuild the docker image increasing the version label and load it on Kind
+```bash
+cd artifacts/python/example-app/src
+docker build -t example-app-1.0.1 .
+kind load docker-image example-app-1.0.1 --name demo
+```
+
+12. Update the k8s [deployment manifest](./artifacts/python/example-app/k8s/deployment.yaml) to use the new image
+```yaml
+...
+spec:
+    containers:
+    - name: example-app-1
+      image: example-app-1.0.1
+      imagePullPolicy: Never
+      ports:
+      - containerPort: 5000
+```
+
+13. Commit your change and watch flux to deploy the new version
