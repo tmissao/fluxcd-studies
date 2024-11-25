@@ -8,6 +8,8 @@ spec:
   interval: 1m0s
   path: ./artifacts/python/example-app/k8s
   prune: true
+  targetNamespace: apps
   sourceRef:
     kind: GitRepository
     name: webapp
+    namespace: apps

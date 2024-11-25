@@ -45,3 +45,8 @@ docker build -t example-app-1.0.0 .
 ```bash
 kind load docker-image example-app-1.0.0 --name demo
 ```
+
+5. Create Apps namespace
+```bash
+kubectl create namespace apps
+```
