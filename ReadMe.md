@@ -95,4 +95,20 @@ spec:
       - containerPort: 5000
 ```
 
-13. Commit your change and watch flux to deploy the new version
+13. Commit your change and watch flux to deploy the new version, the update could be checked analizing the kustomization resource
+```bash
+kubectl get kustomization -n apps
+```
+
+14. Create a new port-forward and check the result
+```bash
+kubectl port-forward service/example-app-1 5000:80 -n apps
+curl localhost:5000
+{"message":"Welcome to the Flask app! Version 1.0.1"}
+```
+
+## Resources
+---
+
+- [Documentation](https://fluxcd.io/flux/concepts/)
+- [Tutorial](https://www.youtube.com/watch?v=X5W_706-jSY)

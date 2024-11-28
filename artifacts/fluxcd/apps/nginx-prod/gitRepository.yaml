@@ -1,0 +1,15 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: nginx-prod
+  namespace: prod
+spec:
+  interval: 1m0s
+  url: https://github.com/tmissao/fluxcd-studies
+  ref:
+    branch: master
+  ignore: |
+    artifacts/kind/
+    artifacts/python/example-app/src/
+    artifacts/fluxcd/
