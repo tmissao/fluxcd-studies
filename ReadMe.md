@@ -75,3 +75,5 @@ flux bootstrap github \
 
 - [Documentation](https://fluxcd.io/flux/concepts/)
 - [Tutorial](https://www.youtube.com/watch?v=X5W_706-jSY)
+- [How to Organize Helm Releases](https://github.com/fluxcd/flux2-kustomize-helm-example)
+- [How to Organize Flux Repos ](https://fluxcd.io/flux/guides/repository-structure/)
