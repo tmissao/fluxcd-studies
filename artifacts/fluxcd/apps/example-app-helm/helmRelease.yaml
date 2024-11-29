@@ -12,7 +12,7 @@ spec:
         kind: GitRepository
         name:  webapp-helm
         namespace: apps
-      interval: 10m
+      interval: 1m
   values:
     commonLabels:
       owner: Missao
