@@ -24,9 +24,9 @@ docker build -t example-app-1.0.0 .
 kind load docker-image example-app-1.0.0 --name demo
 ```
 
-4. Create Apps namespace
+4. Apply FluxCD Manifests
 ```bash
-kubectl create namespace apps
+kubectl apply -f ./artifacts/fluxcd/apps/example-app 
 ```
 
 5. Wait Flux to Reconciliate the deployments

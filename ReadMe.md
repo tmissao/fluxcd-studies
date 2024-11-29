@@ -27,10 +27,10 @@ The purpose of this demo project is to provision a local kubernetes Cluster usin
 
 ![Architecture](./artifacts/pictures/architecture.png)
 
-1. [StandardK8sManifests](./01-StandardK8sManifests.md) - A simple Python Flask Application which have standard K8s manifests
-2. [KustomizeWithK8sManifests](./02-KustomizeK8sManifests.md) - Two Nginx Releases one representing Development and one Production, using Kustomize to overwrite the standard K8s accordingly to the environment
-3. [HelmManifests](./03-HelmManifests.md) - Installation of kube-prometheus-stack using Helm and Flux
-4. Installation of custom helm chart being part of a git repository
+1. [Standard K8s Manifests](./01-StandardK8sManifests.md) - A simple Python Flask Application which have standard K8s manifests
+2. [Kustomize With K8s Manifests](./02-KustomizeK8sManifests.md) - Two Nginx Releases one representing Development and one Production, using Kustomize to overwrite the standard K8s accordingly to the environment
+3. [Helm Manifests](./03-HelmManifests.md) - Installation of kube-prometheus-stack using Helm and Flux
+4. [Local Helm Manifests](./04-LocalHelmManifests.md) - Installation of custom helm chart being part of a git repository
 
 ## Requisites
 ---
