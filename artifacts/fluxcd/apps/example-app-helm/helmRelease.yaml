@@ -1,0 +1,18 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: webapp-helm
+  namespace: apps
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: ./artifacts/python/example-app/helm
+      sourceRef:
+        kind: GitRepository
+        name:  webapp-helm
+        namespace: apps
+      interval: 10m
+  values:
+    commonLabels:
+      owner: Missao

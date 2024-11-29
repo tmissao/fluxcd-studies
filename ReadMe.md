@@ -1,4 +1,36 @@
-# Flux Studies
+# FluxCD Studies
+
+FluxCD is a GitOps tool designed for continuous delivery of applications and infrastructure to Kubernetes. It synchronizes your cluster's state with the desired state defined in a Git repository, ensuring consistency and repeatability. Flux automates the deployment of Kubernetes manifests, Helm charts, and other Kubernetes-native resources directly from version-controlled repositories.
+
+## FluxCD Key Features
+
+Those are the FluxCD key features:
+
+- `GitOps Workflow`: Flux operates on the principle of GitOps, where the Git repository serves as the single source of truth. It continuously monitors your Git repository and applies any changes to the cluster.
+
+- `Declarative Configuration`: Flux uses declarative configuration for Kubernetes resources. This means the desired state is fully described in YAML or Helm manifests.
+
+- `Automated Deployments`: Flux automates the deployment process, applying changes from Git to the cluster without manual intervention.
+
+- `Helm Chart Support`: It supports deploying applications through Helm charts, including managing dependencies and values.
+
+- `Drift Detection`: Flux detects drift between the desired state in Git and the actual state of the cluster and automatically reconciles them.
+
+- `Multi-tenancy and Scoping`: It supports scoped deployments, enabling different teams to work independently within the same cluster.
+
+- `Extensible Ecosystem`: Flux integrates with multiple tools like Helm, Kustomize, and SOPS (for secrets management).
+
+## Demo Project
+---
+
+The purpose of this demo project is to provision a local kubernetes Cluster using [KinD](https://kind.sigs.k8s.io/), configure FluxCD with the current repository performing the following releases
+
+![Architecture](./artifacts/pictures/architecture.png)
+
+1. [StandardK8sManifests](./01-StandardK8sManifests.md) - A simple Python Flask Application which have standard K8s manifests
+2. [KustomizeWithK8sManifests](./02-KustomizeK8sManifests.md) - Two Nginx Releases one representing Development and one Production, using Kustomize to overwrite the standard K8s accordingly to the environment
+3. [HelmManifests](./03-HelmManifests.md) - Installation of kube-prometheus-stack using Helm and Flux
+4. Installation of custom helm chart being part of a git repository
 
 ## Requisites
 ---
@@ -35,77 +67,8 @@ flux bootstrap github \
   --namespace=flux-system
 ```
 
-3. Build Python App Image
-```bash
-cd artifacts/python/example-app/src
-docker build -t example-app-1.0.0 .
-```
+3. Check out the releases's steps that you are interested
 
-4. Load Python App image on K8s via Kind
-```bash
-kind load docker-image example-app-1.0.0 --name demo
-```
-
-5. Create Apps namespace
-```bash
-kubectl create namespace apps
-```
-
-6. Wait Flux to Reconciliate the deployments
-
-7. Check your deployments
-```bash
-kubectl get deployments -n apps
-```
-
-8. Port Forward the Application
-```bash
-kubectl port-forward service/example-app-1 5000:80 -n apps
-```
-
-9. Check the result
-```bash
-curl localhost:5000
-# {"message":"Welcome to the Flask app!" Version 1.0.0}
-```
-
-10. Update the [app file](./artifacts/python/example-app/src/app.py) increasing the version to 1.0.1
-```python
-@app.route('/')
-def home():
-    return jsonify({"message": "Welcome to the Flask app! Version 1.0.1"})
-```
-
-11. Rebuild the docker image increasing the version label and load it on Kind
-```bash
-cd artifacts/python/example-app/src
-docker build -t example-app-1.0.1 .
-kind load docker-image example-app-1.0.1 --name demo
-```
-
-12. Update the k8s [deployment manifest](./artifacts/python/example-app/k8s/deployment.yaml) to use the new image
-```yaml
-...
-spec:
-    containers:
-    - name: example-app-1
-      image: example-app-1.0.1
-      imagePullPolicy: Never
-      ports:
-      - containerPort: 5000
-```
-
-13. Commit your change and watch flux to deploy the new version, the update could be checked analizing the kustomization resource
-```bash
-kubectl get kustomization -n apps
-```
-
-14. Create a new port-forward and check the result
-```bash
-kubectl port-forward service/example-app-1 5000:80 -n apps
-curl localhost:5000
-{"message":"Welcome to the Flask app! Version 1.0.1"}
-```
 
 ## Resources
 ---
